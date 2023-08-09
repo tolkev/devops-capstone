@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  dnsauth:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: ocr2.devocp.safaricom.net/beaver-squad/dns_authoritative:v1
+    container_name: dns_authoritative
+    # command: ls -al /etc/bind
+    # command: /usr/sbin/named -g -c /etc/bind/named.conf.options -u bind
+    hostname: dns-authoritative
+    environment:
+      - BIND9_USER=bind
+      - TZ=EAT
+      # - HOSTNAME=dns1
+    # privileged: true
+    expose:
+      - "53"
+      - "5353"
+    ports:
+      - "5301:53/tcp"
+      - "5301:53/udp"
+      - "953:953/tcp"
+    # network_mode: "host"
+    networks:
+      # main_v4_v6:
+      #   ipv4_address: 192.5.0.100
+      - main_v4_v6
+    volumes:
+      # - type: bind
+      #   source: ./config
+      #   target: /etc/bind/
+      #   read_only: true
+      - ./config:/etc/bind:rw
+    restart: unless-stopped
+networks:
+  main_v4_v6:
+    external: true

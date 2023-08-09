@@ -1,0 +1,21 @@
+;
+; BIND data file for local safbiz.co.ke zone
+;
+$TTL    604800
+@       IN      SOA     ns1.safbiz.co.ke. root.safbiz.co.ke. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+
+@       IN      NS      localhost.
+;1.0.0   IN      PTR     localhost.
+
+;safbiz.co.ke		 IN      NS      ns1.safbiz.co.ke.
+;safbiz.co.ke		 IN      NS      ns2.safbiz.co.ke.
+
+ns1.safbiz.co.ke.        IN      A      41.203.208.18
+ns2.safbiz.co.ke.        IN      A      41.203.208.19
+www.safbiz.co.ke.        IN      A      197.248.5.53

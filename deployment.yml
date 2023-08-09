@@ -1,0 +1,58 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bind9-service
+  labels:
+    app: bind9
+spec:
+  type: LoadBalancer
+  selector:
+    app: bind9
+  ports:
+  - protocol: TCP
+    #port: 5353
+    port: 53
+    targetPort: 53
+    name: bind9-tcp
+    # added
+    #nodePort: 30043
+  - protocol: UDP
+    #port: 5353
+    port: 53
+    targetPort: 53
+    name: bind9-udp
+    # added
+    #nodePort: 30043
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bind9-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bind9
+  template:
+    metadata:
+      labels:
+        app: bind9
+    spec:
+      volumes:
+      - name: auth-bind9-pvc
+        persistentVolumeClaim:
+         claimName: auth-bind9-pvc
+      containers:
+      - name: bind9
+        #        image: ubuntu/bind9:edge
+        image: evansowino/authdnsbind:1.5
+        volumeMounts:
+        - name: auth-bind9-pvc
+          mountPath: /thkisilon_container_nfs/dns-authoritative/config        
+        env:
+        ports:
+        - containerPort: 53
+          protocol: TCP
+        - containerPort: 53
+          protocol: UDP

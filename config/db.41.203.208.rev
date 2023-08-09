@@ -1,0 +1,19 @@
+;
+; BIND data file for 208.203.41.in-addr.arpa PTR
+;
+$TTL    604800
+208.203.41.in-addr.arpa.       IN      SOA     ns1.safbiz.co.ke. root.safbiz.co.ke. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+
+@       IN      NS      localhost.
+;1.0.0   IN      PTR     localhost.
+
+$GENERATE 1-17   $ PTR 41-203-208-$.safbiz.co.ke.
+18.208.203.41.in-addr.arpa.     IN      PTR     ns1.safbiz.co.ke.
+19.208.203.41.in-addr.arpa.     IN      PTR     ns1.safbiz.co.ke.
+$GENERATE 20-254   $ PTR 41-203-208-$.safbiz.co.ke.
